@@ -8,6 +8,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 
+import static com.sparta.springtwoproject1.user.entity.UserRoleEnum.USER;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -23,8 +25,12 @@ public class Users extends Timestamped {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private UserRoleEnum role;
+
     public Users(SignUpRequestDto requestDto) {
         this.userName = requestDto.getUserName();
         this.password = requestDto.getPassword();
+        this.role = USER;
     }
 }

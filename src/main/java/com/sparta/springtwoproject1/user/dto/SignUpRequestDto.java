@@ -11,11 +11,11 @@ import javax.validation.constraints.Size;
 public class SignUpRequestDto {
 
     @Size(min = 4, max = 10)
-    @Pattern(regexp = "[0-9a-z]+]")
+    @Pattern(regexp = "[0-9a-z]+")
     private String userName;
 
     @Size(min = 8, max = 15)
-    @Pattern(regexp = "[0-9a-zA-Z!@#$%^&*(),.?\":{}|<>]+]")
+    @Pattern(regexp = "[0-9a-zA-Z!@#$%^&*(),.?\":{}|<>]+")
     private String password;
 
     public SignUpRequestDto(String userName, String password) {
