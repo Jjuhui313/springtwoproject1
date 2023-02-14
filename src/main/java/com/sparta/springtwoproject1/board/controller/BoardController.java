@@ -25,12 +25,21 @@ public class BoardController {
     private final CommentService commentService;
 
     @PostMapping("/board")
-    public BoardResponseDto createBoard(@RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
-        return boardService.createBoard(requestDto, request);
+    public ResponseEntity<Object> createBoard(@RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
+        BoardResponseDto boardResponseDto = null;
+        try {
+            boardResponseDto = boardService.createBoard(requestDto, request);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new ExcepMsg("토큰이 유효하지 않습니다.", BAD_REQUEST.value()), BAD_REQUEST);
+        }
+//        return boardService.createBoard(requestDto, request);
+
+        return new ResponseEntity<>(boardResponseDto, OK);
     }
 
     @GetMapping("/board")
     public List<BoardResponseDto> getPosts() {
+
         return boardService.getPosts();
     }
 

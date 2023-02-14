@@ -33,7 +33,7 @@ public class BoardService {
     private final CommentService commentService;
 
     public List<BoardResponseDto> getPosts() {
-        List<Board> board = boardRepository.findAllByOrderByCreateAtDesc().stream().filter(board1 -> board1.getIsDeleted() == null).collect(Collectors.toList());
+        List<Board> board = boardRepository.findAllByOrderByCreateAtDesc().stream().filter(board1 -> !board1.getIsDeleted()).collect(Collectors.toList());
         return board.stream().map(board1 -> new BoardResponseDto(board1, commentService.getComment(board1.getId()))).collect(Collectors.toList());
     }
 
@@ -41,7 +41,7 @@ public class BoardService {
         Board entity = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 게시글은 존재하지 않습니다.")
         );
-        if(entity.getIsDeleted() != null) {
+        if(entity.getIsDeleted()) {
             throw new IllegalArgumentException("해당 게시글은 삭제된 게시글입니다.");
         }
         return new BoardResponseDto(entity);

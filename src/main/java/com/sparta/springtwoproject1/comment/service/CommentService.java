@@ -48,7 +48,7 @@ public class CommentService {
 
     public List<Comment> getComment(Long id) {
         List<Comment> comments = commentRepository.findByBoard_IdOrderByCreateAtDesc(id);
-        return comments.stream().filter(comment -> comment.getIsDeleted() != true).collect(Collectors.toList());
+        return comments.stream().filter(comment -> !comment.getIsDeleted()).collect(Collectors.toList());
     }
 
     @Transactional

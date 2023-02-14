@@ -39,7 +39,7 @@ public class Board extends Timestamped {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.user = user;
-        this.isDeleted = null;
+        this.isDeleted = false;
     }
 
 
