@@ -3,7 +3,6 @@ package com.sparta.springtwoproject1.board.controller;
 import com.sparta.springtwoproject1.board.dto.BoardRequestDto;
 import com.sparta.springtwoproject1.board.dto.BoardResponseDto;
 import com.sparta.springtwoproject1.board.dto.MessageDto;
-import com.sparta.springtwoproject1.board.entity.Board;
 import com.sparta.springtwoproject1.board.service.BoardService;
 import com.sparta.springtwoproject1.comment.entity.Comment;
 import com.sparta.springtwoproject1.comment.service.CommentService;
@@ -11,7 +10,6 @@ import com.sparta.springtwoproject1.exception.dto.ExcepMsg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,9 +35,15 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public BoardResponseDto getPost(@PathVariable Long id) {
+    public Object getPost(@PathVariable Long id) {
         List<Comment> comments = commentService.getComment(id);
-        BoardResponseDto board = boardService.findById(id);
+        BoardResponseDto board = null;
+        try {
+            board = boardService.findById(id);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(new ExcepMsg("해당 게시글은 삭제된 게시글입니다.", BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+        }
+
         return new BoardResponseDto(board, comments);
     }
 
