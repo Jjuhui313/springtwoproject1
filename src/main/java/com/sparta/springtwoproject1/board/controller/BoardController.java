@@ -43,7 +43,6 @@ public class BoardController {
         return new BoardResponseDto(board, comments);
     }
 
-    @Transactional
     @PatchMapping("/board/{id}")
     public ResponseEntity<Object> updatePost(@PathVariable Long id, @RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
         MessageDto msg = null;
@@ -61,7 +60,6 @@ public class BoardController {
         return new ResponseEntity<>(msg, OK);
     }
 
-    @Transactional
     @DeleteMapping("/board/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id, HttpServletRequest request) {
         ExcepMsg msg = null;

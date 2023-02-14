@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.sparta.springtwoproject1.user.entity.UserRoleEnum.ADMIN;
+import static com.sparta.springtwoproject1.user.entity.UserRoleEnum.USER;
 import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j
@@ -48,7 +48,8 @@ public class CommentService {
 
     public List<Comment> getComment(Long id) {
         List<Comment> comments = commentRepository.findByBoard_IdOrderByCreateAtDesc(id);
-        return comments.stream().collect(Collectors.toList());
+        comments.forEach(comment -> log.info("comment : body = {}", comment.getContent(), comment.getIsDeleted()));
+        return comments.stream().filter(comment -> comment.getIsDeleted() != true).collect(Collectors.toList());
     }
 
     @Transactional
@@ -56,11 +57,11 @@ public class CommentService {
         String token = jwtUtil.resolveToken(request);
         Claims claims = jwtUtil.getUserInfoFromToken(token);
         Users users = userRepository.findByUserName(claims.getSubject()).orElseThrow();
-        if(!jwtUtil.validateToken(token) || users.getRole().equals(ADMIN)) {
+        if(!jwtUtil.validateToken(token)) {
             return null;
         }
         Comment comment = commentRepository.findById(cId).orElseThrow();
-        if(!comment.getUserName().equals(users.getUserName())) {
+        if(!comment.getUserName().equals(users.getUserName()) && users.getRole() == USER) {
             throw new IllegalAccessException("작성자만 삭제/수정할 수 있습니다.");
         }
         comment.update(commentRequestDto.getContent());
@@ -74,14 +75,15 @@ public class CommentService {
         String token = jwtUtil.resolveToken(request);
         Claims claims = jwtUtil.getUserInfoFromToken(token);
         Users users = userRepository.findByUserName(claims.getSubject()).orElseThrow();
-        if(!jwtUtil.validateToken(token) || users.getRole().equals(ADMIN)) {
-            return new ExcepMsg("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
+        if(!jwtUtil.validateToken(token)) {
+            return null;
         }
         Comment comment = commentRepository.findById(cId).orElseThrow();
-        if(!comment.getUserName().equals(users.getUserName())) {
+        if(!comment.getUserName().equals(users.getUserName()) && users.getRole() == USER) {
             throw new IllegalAccessException("작성자만 삭제/수정할 수 있습니다.");
         }
-        commentRepository.deleteById(cId);
+//        commentRepository.deleteById(cId);
+        comment.setIsDeleted();
         return new ExcepMsg("삭제 성공", OK.value());
     }
 }

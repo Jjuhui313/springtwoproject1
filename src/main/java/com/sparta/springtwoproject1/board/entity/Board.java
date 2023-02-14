@@ -26,6 +26,8 @@ public class Board extends Timestamped {
     @Column(nullable = false)
     private String content;
 
+    private Boolean isDeleted;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private Users user;
@@ -37,6 +39,7 @@ public class Board extends Timestamped {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.user = user;
+        this.isDeleted = null;
     }
 
 
@@ -48,5 +51,9 @@ public class Board extends Timestamped {
     public String getUserName() {
 
         return this.user.getUserName();
+    }
+
+    public void delete(Boolean deleted) {
+        this.isDeleted = deleted;
     }
 }

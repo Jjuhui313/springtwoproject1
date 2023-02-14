@@ -2,7 +2,6 @@ package com.sparta.springtwoproject1.exception.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @NoArgsConstructor

@@ -22,6 +22,8 @@ public class Comment extends Timestamped {
     @Column(nullable = false)
     private String content;
 
+    private Boolean isDeleted;
+
     @ManyToOne
     @JoinColumn(name = "BOARD_ID")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -31,11 +33,16 @@ public class Comment extends Timestamped {
         this.userName = userName;
         this.content = commentRequestDto.getContent();
         this.board = board;
+        this.isDeleted = false;
     }
 
 
     public Comment update(String content) {
         this.content = content;
         return this;
+    }
+
+    public void setIsDeleted() {
+        this.isDeleted = true;
     }
 }

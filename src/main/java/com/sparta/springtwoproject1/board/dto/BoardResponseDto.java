@@ -26,6 +26,8 @@ public class BoardResponseDto {
 
     private LocalDateTime modifiedAt;
 
+    private Boolean isDeleted;
+
     public BoardResponseDto(Board entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
@@ -34,6 +36,30 @@ public class BoardResponseDto {
         this.comment = entity.getComment();
         this.createdAt = entity.getCreateAt();
         this.modifiedAt = entity.getModifiedAt();
+        this.isDeleted = entity.getIsDeleted();
+    }
+
+    public BoardResponseDto(Board board, List<Comment> comments) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.userName = board.getUserName();
+        this.comment = comments;
+        this.content = board.getContent();
+        this.createdAt = board.getCreateAt();
+        this.modifiedAt = board.getModifiedAt();
+        this.isDeleted = board.getIsDeleted();
+
+    }
+
+    public BoardResponseDto(Long id, String title, String userName, String content, List<Comment> comments, LocalDateTime createdAt, LocalDateTime modifiedAt, Boolean isDeleted) {
+        this.id = id;
+        this.title = title;
+        this.userName = userName;
+        this.content = content;
+        this.comment = comments;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.isDeleted = isDeleted;
     }
 
     public BoardResponseDto(BoardResponseDto board, List<Comment> comments) {
@@ -44,17 +70,7 @@ public class BoardResponseDto {
         this.content = board.getContent();
         this.createdAt = board.getCreatedAt();
         this.modifiedAt = board.getModifiedAt();
-
-    }
-
-    public BoardResponseDto(Long id, String title, String userName, String content, List<Comment> comments, LocalDateTime createdAt, LocalDateTime modifiedAt) {
-        this.id = id;
-        this.title = title;
-        this.userName = userName;
-        this.content = content;
-        this.comment = comments;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+        this.isDeleted = board.getIsDeleted();
     }
 
     public static BoardResponseDto of(Board board) {
