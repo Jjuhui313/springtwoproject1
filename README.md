@@ -65,8 +65,9 @@
 
 
 # ERD
-![spring2projectERD.png](..%2Fspring2projectERD.png)
 
+
+![spring2projectERD](https://user-images.githubusercontent.com/94800969/219056206-72ea0196-58f4-4600-80a6-a666a3d05ecc.png)
 
 
 
