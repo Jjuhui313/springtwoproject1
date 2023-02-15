@@ -1,6 +1,5 @@
 package com.sparta.springtwoproject1.comment.controller;
 
-import com.sparta.springtwoproject1.board.dto.MessageDto;
 import com.sparta.springtwoproject1.comment.dto.CommentRequestDto;
 import com.sparta.springtwoproject1.comment.dto.CommentResponseDto;
 import com.sparta.springtwoproject1.comment.service.CommentService;
@@ -22,16 +21,19 @@ public class CommentController {
 
     @PostMapping("/board/{b-id}/comment")
     public ResponseEntity<Object> createComment(@PathVariable(name = "b-id") Long bId, @RequestBody CommentRequestDto commentRequestDto, HttpServletRequest request) {
-
         CommentResponseDto commentResponseDto = null;
-
         try {
             commentResponseDto = commentService.create(bId, commentRequestDto, request);
+            if(commentResponseDto == null) {
+                return new ResponseEntity<>(new ExcepMsg("토큰이 유효하지 않습니다.", BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(commentResponseDto, OK);
+            }
         } catch (RuntimeException e) {
             return new ResponseEntity<>(new ExcepMsg("토큰이 유효하지 않습니다.", BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(commentResponseDto, OK);
+
     }
 
     @PatchMapping("/board/{b-id}/comment/{c-id}")

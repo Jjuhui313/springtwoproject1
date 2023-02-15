@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.sparta.springtwoproject1.user.entity.UserRoleEnum.ADMIN;
 import static com.sparta.springtwoproject1.user.entity.UserRoleEnum.USER;
 import static org.springframework.http.HttpStatus.OK;
 

@@ -1,6 +1,7 @@
 package com.sparta.springtwoproject1.comment.dto;
 
 import com.sparta.springtwoproject1.comment.entity.Comment;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentResponseDto {
 
     private String content;
@@ -25,12 +28,6 @@ public class CommentResponseDto {
         this.modifiedAt = entity.getModifiedAt();
     }
 
-    public CommentResponseDto(String content, String userName, LocalDateTime createAt, LocalDateTime modifiedAt) {
-        this.content = content;
-        this.userName = userName;
-        this.createAt = createAt;
-        this.modifiedAt = modifiedAt;
-    }
 
     public static CommentResponseDto of(Comment comment) {
         return CommentResponseDto.builder()

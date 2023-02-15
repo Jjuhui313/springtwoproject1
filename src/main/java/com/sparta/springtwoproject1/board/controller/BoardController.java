@@ -29,12 +29,15 @@ public class BoardController {
         BoardResponseDto boardResponseDto = null;
         try {
             boardResponseDto = boardService.createBoard(requestDto, request);
+            if(boardResponseDto == null) {
+                return new ResponseEntity<>(new ExcepMsg("토큰이 유효하지 않습니다.", BAD_REQUEST.value()), BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(boardResponseDto, OK);
+            }
         } catch (RuntimeException e) {
             return new ResponseEntity<>(new ExcepMsg("토큰이 유효하지 않습니다.", BAD_REQUEST.value()), BAD_REQUEST);
         }
-//        return boardService.createBoard(requestDto, request);
 
-        return new ResponseEntity<>(boardResponseDto, OK);
     }
 
     @GetMapping("/board")

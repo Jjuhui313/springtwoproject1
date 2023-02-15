@@ -13,7 +13,6 @@ import com.sparta.springtwoproject1.user.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +34,10 @@ public class CommentService {
     private final UserRepository userRepository;
     public CommentResponseDto create(Long bId, CommentRequestDto commentRequestDto, HttpServletRequest request) {
         String token = jwtUtil.resolveToken(request);
+        if(token == null) {
+            return null;
+        }
+
         if(!jwtUtil.validateToken(token)) {
             return null;
         }
