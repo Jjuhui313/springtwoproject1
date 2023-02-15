@@ -2,7 +2,7 @@
 
 # LV2 + LV3 과제 요구사항
 
----
+
 
 1. 회원 가입 API
     - username, password를 Client에서 전달받기
@@ -59,20 +59,20 @@
 
 # API 명세서
 
----
+
 
 [Postman API 명세서](https://documenter.getpostman.com/view/25673368/2s93CEwwTR)
 
 
 # ERD
-
----
-
 ![spring2projectERD.png](..%2Fspring2projectERD.png)
+
+
+
 
 # 이번 과제를 통해서 고민해봐야 할 것
 
---- 
+
 
 #### 1. 처음 설계한 API와 ERD에 변경사항이 있었나요?<br> 변경되었다면 어떤 점 때문일까요? 첫 설계의 중요성에 대해 생각해보세요.
    - 네 변경사항이 있었습니다. <br>
